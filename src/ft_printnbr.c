@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putpointer.c                                    :+:      :+:    :+:   */
+/*   ft_printnbr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/29 22:12:14 by pdavi-al          #+#    #+#             */
-/*   Updated: 2023/06/23 21:23:58 by vscode           ###   ########.fr       */
+/*   Created: 2023/05/29 21:21:24 by pdavi-al          #+#    #+#             */
+/*   Updated: 2023/06/24 06:28:31 by vscode           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putpointer(const void *ptr, t_element element)
+int	ft_printnbr(char *str_n, int len, t_element element)
 {
-	if (ptr == NULL)
+	int	spaces;
+
+	spaces = element.width - len;
+	if (spaces > 0)
 	{
-		element.precision = -1;
-		return (ft_putstr(NULL_PTR, element));
+		if (!(element.flags & MINUS_FLAG_MASK))
+			ft_print_spaces(spaces, ' ');
+		while (*str_n != '\0')
+			write(1, str_n++, 1);
+		if (element.flags & MINUS_FLAG_MASK)
+			ft_print_spaces(spaces, ' ');
+		return (element.width);
 	}
-	element.flags |= HASH_FLAG_MASK;
-	return (ft_putnbr_base((unsigned long)ptr, HEX_LW_BASE, element));
+	while (*str_n != '\0')
+		write(1, str_n++, 1);
+	return (len);
 }

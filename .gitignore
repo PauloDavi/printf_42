@@ -1,0 +1,5 @@
+printfTester/
+ft_printf_tester/
+.vscode
+**/*.o
+libftprintf.a

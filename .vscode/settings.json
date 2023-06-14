@@ -41,6 +41,12 @@
     ".prettierrc": "json",
     "*.tsx": "typescriptreact",
     ".env.*": "dotenv",
-    "algorithm": "c"
-  }
+    "algorithm": "c",
+    "random": "c",
+    "ft_printf.h": "c"
+  },
+  "cSpell.words": [
+    "printnbr",
+    "putnbr"
+  ]
 }
