@@ -1,5 +1,2 @@
-printfTester/
-ft_printf_tester/
-.vscode
-**/*.o
+build/
 libftprintf.a

@@ -1,38 +1,37 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/24 13:33:56 by pdavi-al          #+#    #+#              #
-#    Updated: 2023/06/24 06:27:15 by vscode           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+vpath %.c src/
 
 CC = cc
 LIB := ar rcs
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS := -Wextra -Wall -Werror
+CFLAGS += -O3 -g3
 NAME = libftprintf.a
 RM = rm -f
+
+OBJ_DIR := build
+
+INCLUDE_DIR := include
+INCLUDES := -I$(INCLUDE_DIR)
+
+INC = -I ./include
+SRCS = ft_printf.c ft_putchar.c ft_putnbr_base.c ft_putnbr.c
+SRCS += ft_putpointer.c ft_putstr.c ft_strlen.c ft_strcpy.c 
+SRCS += ft_flags_utils.c ft_printnbr.c ft_atoi.c
+OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 GREEN='\033[0;32m'
 RESET='\033[0m'
 
-INC = -I ./include
-SRC_DIR = ./src
-SRC_FILES = ft_printf.c ft_putchar.c ft_putnbr_base.c ft_putnbr.c ft_putpointer.c ft_putstr.c ft_strlen.c ft_strcpy.c ft_atoi.c ft_flags_utils.c ft_printnbr.c
-SRCS := $(addprefix $(SRC_DIR)/,$(SRC_FILES))
-OBJS = $(SRCS:.c=.o)
-
 all: $(NAME)
 	@echo $(GREEN)compilation success!$(RESET)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
-
 $(NAME): $(OBJS)
 	$(LIB) $(NAME) $(OBJS)
+
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 bonus: all
 
@@ -45,11 +44,5 @@ fclean: clean
 re: fclean all
 
 rebonus: re
-
-build:
-	$(CC) $(CFLAGS) -g $(INC) $(SRCS) -o $(NAME)
-
-run: build
-	./$(NAME)
 
 .PHONY: all bonus clean fclean re bonus rebonus
